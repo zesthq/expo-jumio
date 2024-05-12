@@ -1,19 +1,9 @@
-node_modules/
-.expo/
-dist/
-npm-debug.*
-*.jks
-*.p8
-*.p12
-*.key
-*.mobileprovision
-*.orig.*
-web-build/
-
-# macOS
+# OSX
+#
 .DS_Store
 
 # Xcode
+#
 build/
 *.pbxuser
 !default.pbxuser
@@ -31,3 +21,10 @@ DerivedData
 *.ipa
 *.xcuserstate
 project.xcworkspace
+.xcode.env.local
+
+# Bundle artifacts
+*.jsbundle
+
+# CocoaPods
+/Pods/
