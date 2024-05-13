@@ -1,9 +1,9 @@
-Minimal reproduction of runtime crash 
+## Minimal reproduction of runtime crash 
 
 
-To reproduce
-    - open ios/jumioexpo51.xcworkspace in Xcode
-    - build & run
+### To reproduce
+- open ios/jumioexpo51.xcworkspace in Xcode
+- build & run
 
 App compiles successfully but crashes at runtime with following error:
 ```
