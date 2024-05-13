@@ -30,6 +30,22 @@ target 'jumioexpo51' do
     :privacy_file_aggregation_enabled => podfile_properties['apple.privacyManifestAggregationEnabled'] == 'true',
   )
 
+  dynamic_frameworks = ['iProov', 'DatadogCore', 'DatadogInternal', 'DatadogRUM']
+
+  pre_install do |installer|
+    installer.pod_targets.each do |pod|
+      if dynamic_frameworks.include?(pod.name)
+        Pod::UI.puts "[JUMIO] ".green + "Linking " + "#{pod.name}".blue + " dynamically"
+        def pod.static_framework?;
+          false
+        end
+        def pod.build_type;
+          Pod::BuildType.dynamic_framework
+        end
+      end
+    end
+  end
+
   post_install do |installer|
     react_native_post_install(
       installer,
@@ -37,6 +53,16 @@ target 'jumioexpo51' do
       :mac_catalyst_enabled => false,
       :ccache_enabled => podfile_properties['apple.ccacheEnabled'] == 'true',
     )
+
+    datadog_frameworks = ['JumioDatadog', 'DatadogCore', 'DatadogInternal', 'DatadogRUM']
+    installer.pods_project.targets.each do |target|
+      target.build_configurations.each do |config|
+        if (datadog_frameworks.include?(target.name))
+          Pod::UI.puts "[JUMIO] ".green + "Overriding minimum deployment target for " + "#{target}".blue
+          config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '12.0'
+        end
+      end
+    end
 
     # This is necessary for Xcode 14, because it signs resource bundles by default
     # when building for devices.
