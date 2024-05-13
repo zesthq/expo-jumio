@@ -60,6 +60,7 @@ target 'jumioexpo51' do
         if (datadog_frameworks.include?(target.name))
           Pod::UI.puts "[JUMIO] ".green + "Overriding minimum deployment target for " + "#{target}".blue
           config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '12.0'
+          config.build_settings['BUILD_LIBRARY_FOR_DISTRIBUTION'] = 'YES'
         end
       end
     end
